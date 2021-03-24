@@ -10,6 +10,7 @@ from selfdrive.config import Conversions as CV
 from selfdrive.controls.lib.drive_helpers import V_CRUISE_MAX
 from selfdrive.controls.lib.events import Events
 from selfdrive.controls.lib.vehicle_model import VehicleModel
+from common.params import Params
 
 GearShifter = car.CarState.GearShifter
 EventName = car.CarEvent.EventName
@@ -17,13 +18,13 @@ MAX_CTRL_SPEED = (V_CRUISE_MAX) * CV.KPH_TO_MS  # 145 = 90 mph
 
 # generic car and radar interfaces
 
-
 class CarInterfaceBase():
   def __init__(self, CP, CarController, CarState):
+    params = Params()
     self.CP = CP
     self.VM = VehicleModel(CP)
-    self.disengage_on_gas = False
-
+    self.disengage_on_gas = True
+    #self.disengage_on_gas = params.get("GasPressToggle", encoding='utf8') == b'1'
     self.frame = 0
     self.low_speed_alert = False
 
