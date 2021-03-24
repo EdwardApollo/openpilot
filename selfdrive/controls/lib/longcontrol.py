@@ -71,6 +71,10 @@ class LongControl():
 
   def update(self, active, CS, v_target, v_target_future, a_target, CP):
     """Update longitudinal control. This updates the state machine and runs a PID loop"""
+    coeffA=0.550069438526312
+    coeffB=2.31950083612346
+    coeffC=4.75928179415508
+    coeffD=0.151692521487322
     # Actuation limits
     self.sm.update(0)
     gas_max_adjust = 1
@@ -81,7 +85,8 @@ class LongControl():
         if v_Horizontal > 1: # cant get pitch from velocity vectors if they are zero
             pitchDeg = math.tan(v_Vertical / v_Horizontal) * 180 / 3.14159
             gas_max_adjust = interp(pitchDeg, [-12, -3, 0, 12], [0, .9, 1, 2])
-    gas_max = interp(CS.vEgo, CP.gasMaxBP, CP.gasMaxV) * gas_max_adjust
+    #gas_max = interp(CS.vEgo, CP.gasMaxBP, CP.gasMaxV) * gas_max_adjust
+    gas_max = coeffD + ( (coeffA - coeffD)/(1+(CS.vEgo/coeffC)^coeffB) )
     brake_max = interp(CS.vEgo, CP.brakeMaxBP, CP.brakeMaxV)
 
     # Update state machine
