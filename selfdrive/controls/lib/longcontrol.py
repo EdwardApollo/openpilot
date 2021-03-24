@@ -86,7 +86,7 @@ class LongControl():
             pitchDeg = math.tan(v_Vertical / v_Horizontal) * 180 / 3.14159
             gas_max_adjust = interp(pitchDeg, [-12, -3, 0, 12], [0, .9, 1, 2])
     #gas_max = interp(CS.vEgo, CP.gasMaxBP, CP.gasMaxV) * gas_max_adjust
-    gas_max = coeffD + ( (coeffA - coeffD)/(1+(CS.vEgo/coeffC)^coeffB) )
+    gas_max = coeffD + ( (coeffA - coeffD)/(1+(CS.vEgo/coeffC)**coeffB) )
     brake_max = interp(CS.vEgo, CP.brakeMaxBP, CP.brakeMaxV)
 
     # Update state machine
