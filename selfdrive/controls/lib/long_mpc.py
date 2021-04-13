@@ -94,7 +94,7 @@ class LongitudinalMpc():
 
     # Calculate mpc
     t = sec_since_boot()
-    if v_ego <= 2:
+    if v_ego <= 1.5:
       TR = 1.85 #follow distance in seconds
     else:
       TR = 1.55
