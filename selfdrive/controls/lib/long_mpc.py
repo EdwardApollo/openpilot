@@ -96,6 +96,8 @@ class LongitudinalMpc():
     t = sec_since_boot()
     if v_ego <= 1.5:
       TR = 1.85 #follow distance in seconds
+    elif v_ego <= 5:
+      TR = 1.45 #follow distance in seconds
     else:
       TR = 1.55
     n_its = self.libmpc.run_mpc(self.cur_state, self.mpc_solution, self.a_lead_tau, a_lead, TR)
