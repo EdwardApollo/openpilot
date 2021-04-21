@@ -86,8 +86,6 @@ class LongControl():
         if v_Horizontal > 1: # cant get pitch from velocity vectors if they are zero
             pitchDeg = math.tan(v_Vertical / v_Horizontal) * 180 / 3.14159
             gas_max_adjust = interp(pitchDeg, [-12, -3, 0, 12], [0, .9, 1, 2])
-            if gas_max_adjust < 1:
-              gas_max_adjust=1
     #gas_max = interp(CS.vEgo, CP.gasMaxBP, CP.gasMaxV) * gas_max_adjust*gms
     if CS.vEgo >= 0:
       gas_max = (coeffD + ( (coeffA - coeffD)/(1+(CS.vEgo/coeffC)**coeffB) ))* gas_max_adjust*gms
