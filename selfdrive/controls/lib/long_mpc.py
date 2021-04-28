@@ -104,8 +104,10 @@ class LongitudinalMpc():
       TR = 1.825 #follow distance in seconds  
     elif v_ego <= 24.5872: #if below 55 mph
       TR = 1.6+((24.5872-v_ego)*0.016777) #follow distance in seconds
-    elif v_ego > 24.5872:
-      TR = 1.6
+    elif v_ego <= 35.7632: #if below 80 mph
+      TR = 1.5+((35.7632-v_ego)*0.0089) #follow distance in seconds
+    elif v_ego > 35.7632: #if below 80 mph
+      TR = 1.5 #follow distance in seconds
     n_its = self.libmpc.run_mpc(self.cur_state, self.mpc_solution, self.a_lead_tau, a_lead, TR)
     duration = int((sec_since_boot() - t) * 1e9)
 
