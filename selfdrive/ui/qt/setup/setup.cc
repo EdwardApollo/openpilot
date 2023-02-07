@@ -29,6 +29,9 @@ void Setup::download(QString url) {
 
   auto version = util::read_file("/VERSION");
 
+  struct curl_slist *list = NULL;
+  list = curl_slist_append(list, ("X-openpilot-serial: " + Hardware::get_serial()).c_str());
+
   char tmpfile[] = "/tmp/installer_XXXXXX";
   FILE *fp = fdopen(mkstemp(tmpfile), "w");
 
@@ -38,6 +41,7 @@ void Setup::download(QString url) {
   curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
   curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
   curl_easy_setopt(curl, CURLOPT_USERAGENT, (USER_AGENT + version).c_str());
+  curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
 
   int ret = curl_easy_perform(curl);
 
@@ -50,6 +54,7 @@ void Setup::download(QString url) {
     emit finished(false);
   }
 
+  curl_slist_free_all(list);
   curl_easy_cleanup(curl);
   fclose(fp);
 }
@@ -178,8 +183,8 @@ QWidget * Setup::network_setup() {
   QObject::connect(request, &HttpRequest::requestDone, [=](const QString &, bool success) {
     cont->setEnabled(success);
     if (success) {
-      const bool cell = networking->wifi->currentNetworkType() == NetworkType::CELL;
-      cont->setText(cell ? tr("Continue without Wi-Fi") : tr("Continue"));
+      const bool wifi = networking->wifi->currentNetworkType() == NetworkType::WIFI;
+      cont->setText(wifi ? tr("Continue") : tr("Continue without Wi-Fi"));
     } else {
       cont->setText(tr("Waiting for internet"));
     }
