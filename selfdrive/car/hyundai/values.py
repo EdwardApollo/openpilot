@@ -234,8 +234,8 @@ CAR_INFO: Dict[str, Optional[Union[HyundaiCarInfo, List[HyundaiCarInfo]]]] = {
   CAR.KIA_CEED: HyundaiCarInfo("Kia Ceed 2019", harness=Harness.hyundai_e),
   CAR.KIA_EV6: [
     HyundaiCarInfo("Kia EV6 (Southeast Asia only) 2022-23", "All", harness=Harness.hyundai_p),
-    HyundaiCarInfo("Kia EV6 (without HDA II) 2022", "Highway Driving Assist", harness=Harness.hyundai_l),
-    HyundaiCarInfo("Kia EV6 (with HDA II) 2022", "Highway Driving Assist II", harness=Harness.hyundai_p)
+    HyundaiCarInfo("Kia EV6 (without HDA II) 2022-23", "Highway Driving Assist", harness=Harness.hyundai_l),
+    HyundaiCarInfo("Kia EV6 (with HDA II) 2022-23", "Highway Driving Assist II", harness=Harness.hyundai_p)
   ],
 
   # Genesis
@@ -385,14 +385,14 @@ FW_QUERY_CONFIG = FwQueryConfig(
     Request(
       [HYUNDAI_VERSION_REQUEST_ALT],
       [HYUNDAI_VERSION_RESPONSE],
-      whitelist_ecus=[Ecu.parkingAdas],
+      whitelist_ecus=[Ecu.parkingAdas, Ecu.hvac],
       bus=0,
       auxiliary=True,
     ),
     Request(
       [HYUNDAI_VERSION_REQUEST_ALT],
       [HYUNDAI_VERSION_RESPONSE],
-      whitelist_ecus=[Ecu.parkingAdas],
+      whitelist_ecus=[Ecu.parkingAdas, Ecu.hvac],
       bus=1,
       auxiliary=True,
       obd_multiplexing=False,
@@ -1656,6 +1656,7 @@ FW_VERSIONS = {
   },
   CAR.KIA_SPORTAGE_HYBRID_5TH_GEN: {
     (Ecu.fwdCamera, 0x7c4, None): [
+      b'\xf1\x00NQ5 FR_CMR AT GEN LHD 1.00 1.00 99211-P1060 665',
       b'\xf1\x00NQ5 FR_CMR AT USA LHD 1.00 1.00 99211-P1060 665',
     ],
     (Ecu.fwdRadar, 0x7d0, None): [
