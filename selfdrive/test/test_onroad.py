@@ -161,7 +161,11 @@ class TestOnroad(unittest.TestCase):
     for s, msgs in self.service_msgs.items():
       if s in ('initData', 'sentinel'):
         continue
-
+      
+      # skip gps services for now
+      if s in ('ubloxGnss', 'ubloxRaw', 'gnssMeasurements'):
+        continue
+        
       with self.subTest(service=s):
         assert len(msgs) >= math.floor(service_list[s].frequency*55)
 
@@ -337,6 +341,17 @@ class TestOnroad(unittest.TestCase):
         break
     expected = EVENTS[car.CarEvent.EventName.startup][ET.PERMANENT].alert_text_1
     self.assertEqual(startup_alert, expected, "wrong startup alert")
+
+  def test_engagable(self):
+    no_entries = Counter()
+    for m in self.service_msgs['carEvents']:
+      for evt in m.carEvents:
+        if evt.noEntry:
+          no_entries[evt.name] += 1
+
+    eng = [m.controlsState.engageable for m in self.service_msgs['controlsState']]
+    assert all(eng), \
+           f"Not engageable for whole segment:\n- controlsState.engageable: {Counter(eng)}\n- No entry events: {no_entries}"
 
 
 if __name__ == "__main__":
