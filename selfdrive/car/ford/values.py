@@ -38,12 +38,6 @@ class CarControllerParams:
     pass
 
 
-class CANBUS:
-  main = 0
-  radar = 1
-  camera = 2
-
-
 class CAR:
   BRONCO_SPORT_MK1 = "FORD BRONCO SPORT 1ST GEN"
   ESCAPE_MK4 = "FORD ESCAPE 4TH GEN"
@@ -101,6 +95,9 @@ FW_QUERY_CONFIG = FwQueryConfig(
       whitelist_ecus=[Ecu.eps, Ecu.abs, Ecu.fwdRadar, Ecu.fwdCamera, Ecu.shiftByWire],
     ),
   ],
+  extra_ecus=[
+    (Ecu.shiftByWire, 0x732, None),
+  ],
 )
 
 FW_VERSIONS = {
@@ -122,10 +119,6 @@ FW_VERSIONS = {
     (Ecu.engine, 0x7E0, None): [
       b'M1PA-14C204-GF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
       b'N1PA-14C204-AC\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-    ],
-    (Ecu.shiftByWire, 0x732, None): [
-      b'LX6P-14G395-AD\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-      b'PZ1P-14G395-AB\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
     ],
   },
   CAR.ESCAPE_MK4: {
@@ -152,11 +145,6 @@ FW_VERSIONS = {
       b'MX6A-14C204-BEF\x00\x00\x00\x00\x00\x00\x00\x00\x00',
       b'MX6A-14C204-BEJ\x00\x00\x00\x00\x00\x00\x00\x00\x00',
       b'NX6A-14C204-BLE\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-    ],
-    (Ecu.shiftByWire, 0x732, None): [
-      b'LX6P-14G395-AB\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-      b'LX6P-14G395-AD\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-      b'PZ1P-14G395-AC\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
     ],
   },
   CAR.EXPLORER_MK6: {
@@ -190,12 +178,6 @@ FW_VERSIONS = {
       b'MB5A-14C204-RC\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
       b'NB5A-14C204-HB\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
     ],
-    (Ecu.shiftByWire, 0x732, None): [
-      b'L1MP-14C561-AB\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-      b'L1MP-14G395-AD\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-      b'L1MP-14G395-AE\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-      b'L1MP-14G395-JB\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-    ],
   },
   CAR.FOCUS_MK4: {
     (Ecu.eps, 0x730, None): [
@@ -212,8 +194,6 @@ FW_VERSIONS = {
     ],
     (Ecu.engine, 0x7E0, None): [
       b'JX6A-14C204-BPL\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-    ],
-    (Ecu.shiftByWire, 0x732, None): [
     ],
   },
   CAR.MAVERICK_MK1: {
@@ -235,9 +215,6 @@ FW_VERSIONS = {
       b'NZ6A-14C204-PA\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
       b'NZ6A-14C204-ZA\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
       b'PZ6A-14C204-JC\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-    ],
-    (Ecu.shiftByWire, 0x732, None): [
-      b'NZ6P-14G395-AD\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
     ],
   },
 }
